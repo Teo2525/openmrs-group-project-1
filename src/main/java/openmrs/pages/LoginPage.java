@@ -25,6 +25,8 @@ public class LoginPage {
         PageFactory.initElements(driver, this);
     }
 
+
+    //========================= Find all elements on Login Page ============================
     //find element for USER LABEL
     @FindBy(xpath = "//label[@for='username']")
     private WebElement usernameLabel;
@@ -40,10 +42,6 @@ public class LoginPage {
     //find element for PASSWORD INPUT
     @FindBy(id = "password")
     private WebElement password;
-
-    // find element for IMPATIENT WARD
-    @FindBy(id = "Inpatient Ward")
-    private WebElement impatientWard;
 
     //find element for LOCATION LABEL
     @FindBy(xpath = "//label[@for='sessionLocation']")
@@ -61,9 +59,36 @@ public class LoginPage {
     @FindBy(xpath = "//legend[@class='w-auto']")
     private WebElement loginLabel;
 
+    // find element errorWarning
     @FindBy(id = "sessionLocationError")
     private WebElement errorWarning;
 
+    // find element for IMPATIENT WARD
+    @FindBy(id = "Inpatient Ward")
+    private WebElement impatientWard;
+
+    // find element for OUTPATIENT CLINIC
+    @FindBy(id = "Outpatient Clinic")
+    private WebElement outpatientClinic;
+
+    // find element for ISOLATION WARD
+    @FindBy(id = "Isolation Ward")
+    private WebElement isolationWard;
+
+    // find element for PHARMACY
+    @FindBy(id = "Pharmacy")
+    private WebElement pharmacy;
+
+    // find element for LABORATORY
+    @FindBy(id = "Laboratory")
+    private WebElement laboratory;
+
+    // find element for REGISTRATION DESK
+    @FindBy(id = "Registration Desk")
+    private WebElement registrationDesk;
+
+
+    //========================= Methods ============================
 
     // 1. get to the HomePage
     public void visitHomePage() {
@@ -72,13 +97,13 @@ public class LoginPage {
         Assert.assertEquals(title, "Login");
     }
 
-
     public void login() {
         username.sendKeys(ConfigReader.getProperty("username"));  // enter username from config.properties
         password.sendKeys(ConfigReader.getProperty("password"));  // enter password from config.properties
 
         //click sing in
         loginButton.click();
+
         //verify error
         Assert.assertTrue(errorWarning.isDisplayed(), "You must choose a location!");
 
@@ -87,30 +112,26 @@ public class LoginPage {
 
         //click sign again
         loginButton.click();
-
-
     }
 
     private void selectLocation() {
 
         verifyLocations();
         //select location Inpatient Ward
+        impatientWard.click();
         Assert.assertEquals("impatientWard", "Impatient Ward");
     }
 
 
-
     private void verifyLocations() {
         final List<WebElement> locations = driver.findElements(By.xpath("//ul[@id='sessionLocation']/li"));
-        for (int i = 0; i < locations.size(); i++) {
-        
-
+        for (WebElement location : locations) {
+            Assert.assertTrue(location.isDisplayed());
         }
-
-        }
-
-
     }
+}
+
+
 
 
 
