@@ -29,7 +29,7 @@ public class ConfigReader {
     }
 
     public static void setProperty(String key, String value) throws IOException {
-        properties.store(new FileOutputStream("src/main/resources/configuration.properties"), null);
+        properties.store(new FileOutputStream("src/main/resources/config.properties"), null);
         properties.setProperty(key, value);
     }
 
