@@ -2,8 +2,11 @@ package openmrs.pages;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.testng.Assert;
 
 /**
  * Created by tairovich_jr on 2022-01-22.
@@ -15,10 +18,23 @@ public class CommonPage {
 
     public CommonPage(WebDriver driver){
         this.driver = driver;
-        PageFactory.initElements(driver,this);
-
 
     }
+
+    @FindBy(partialLinkText = "admin")
+    WebElement admin;
+
+    @FindBy(id = "selected_location")
+    WebElement selectedImpatientWard;
+
+    @FindBy(partialLinkText = "Logout")
+    WebElement logoutLink;
+
+
+
+
+
+
 
 
 

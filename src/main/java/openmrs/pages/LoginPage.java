@@ -23,6 +23,7 @@ public class LoginPage {
     public LoginPage(WebDriver driver) {
         this.driver = driver;
         PageFactory.initElements(driver, this);
+
     }
 
 
@@ -50,6 +51,7 @@ public class LoginPage {
     //find element for LOGIN BUTTON
     @FindBy(id = "loginButton")
     private WebElement loginButton;
+
 
     // find element for CAN'T LOGIN
     @FindBy(id = "cantLogin")
@@ -91,10 +93,10 @@ public class LoginPage {
     //========================= Methods ============================
 
     // 1. get to the HomePage
-    public void visitHomePage() {
+    public void visitLoginPage() {
         driver.get(ConfigReader.getProperty("url"));      // use the url from the config.properties file
         String title = driver.getTitle();
-        Assert.assertEquals(title, "Login");
+        Assert.assertEquals(title, "Login");      // verify the title of the page
     }
 
     public void login() {
@@ -105,21 +107,24 @@ public class LoginPage {
         loginButton.click();
 
         //verify error
-        Assert.assertTrue(errorWarning.isDisplayed(), "You must choose a location!");
+        Assert.assertTrue(errorWarning.isDisplayed());
 
         //select location
-        impatientWard.click();
+        selectLocation();
+
 
         //click sign again
         loginButton.click();
+
     }
 
     private void selectLocation() {
-
         verifyLocations();
+
         //select location Inpatient Ward
         impatientWard.click();
-        Assert.assertEquals("impatientWard", "Impatient Ward");
+        Assert.assertTrue(impatientWard.isEnabled());
+
     }
 
 
