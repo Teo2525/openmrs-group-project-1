@@ -2,6 +2,7 @@ package openmrs;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
 import openmrs.pages.CommonPage;
+import openmrs.pages.HomePage;
 import openmrs.pages.LoginPage;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -26,17 +27,20 @@ public class PatientRegistrationTests {
         loginPage.visitLoginPage();
         loginPage.login();
 
-    }
-
-
-    @Test
-    public void commonPageTest() {
-        CommonPage commonPage = new CommonPage(driver);
 
     }
+
+
+//    @Test
+//    public void commonPageTest() {
+//        CommonPage commonPage = new CommonPage(driver);
+//    }
 
     @Test
     public void homePageTest() {
+        HomePage homePage = new HomePage(driver);
+        homePage.visitHomePage();
+
 
     }
 

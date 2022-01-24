@@ -8,13 +8,11 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.testng.Assert;
 
-/**
- * Created by tairovich_jr on 2022-01-22.
- */
+
 //use this class in case you need to store common element across all pages
 public class CommonPage {
 
-    private WebDriver driver;
+     WebDriver driver;
 
     public CommonPage(WebDriver driver){
         this.driver = driver;
