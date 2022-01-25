@@ -9,6 +9,7 @@ import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.testng.Assert;
+import org.testng.asserts.SoftAssert;
 
 import java.util.List;
 
@@ -17,11 +18,13 @@ public class LoginPage {
 
     // declare the WebDriver Object
     private WebDriver driver;
+    private SoftAssert softAssert;
 
 
     // create Constructor for WedDriver Object
-    public LoginPage(WebDriver driver) {
+    public LoginPage(WebDriver driver, SoftAssert softAssert) {
         this.driver = driver;
+        this.softAssert = softAssert;
         PageFactory.initElements(driver, this);
 
     }
@@ -95,8 +98,10 @@ public class LoginPage {
     // 1. get to the HomePage
     public void visitLoginPage() {
         driver.get(ConfigReader.getProperty("url"));      // use the url from the config.properties file
-        String title = driver.getTitle();
-        Assert.assertEquals(title, "Login");      // verify the title of the page
+        String actualTitle = driver.getTitle();
+        String expectedTitle ="Login";
+        softAssert.assertEquals(actualTitle,expectedTitle);      // verify the title of the page
+//        driver.quit();
     }
 
     public void login() {
@@ -116,25 +121,35 @@ public class LoginPage {
         //click sign again
         loginButton.click();
 
+
     }
 
     private void selectLocation() {
-        verifyLocations();
-
+//        verifyLocations();
+//
         //select location Inpatient Ward
         impatientWard.click();
-        Assert.assertTrue(impatientWard.isEnabled());
+        softAssert.assertTrue(impatientWard.isEnabled());
 
     }
 
 
     private void verifyLocations() {
         final List<WebElement> locations = driver.findElements(By.xpath("//ul[@id='sessionLocation']/li"));
+        String[] locatoinNames = {"Inpatient Ward", "Outpatient Clinic", "Isolation Ward", "Pharmacy","Laboratory","Registration Desk"};
+        int i = 0;
         for (WebElement location : locations) {
-            Assert.assertTrue(location.isDisplayed());
+            softAssert.assertEquals(location.getText().trim(), locatoinNames[i]);
+            i++;
         }
     }
-}
+
+
+//    // Assert.assertEquals(actualTitle,expectedTitle);
+//    private void verifyAllLables(){
+
+    }
+
 
 
 

@@ -8,6 +8,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.testng.Assert;
+import org.testng.asserts.SoftAssert;
 
 import java.util.List;
 
@@ -20,7 +21,7 @@ public class HomePage extends CommonPage {
     @FindBy(id = "org-openmrs-module-coreapps-activeVisitsHomepageLink-org-openmrs-module-coreapps-activeVisitsHomepageLink-extension")
     private WebElement activeVisitsTab;
 
-    @FindBy(id = "referenceapplication-registrationapp-registerPatient-homepageLink-referenceapplication-registrationapp-registerPatient-homepageLink-extension']")
+    @FindBy(xpath = "//a[@id='referenceapplication-registrationapp-registerPatient-homepageLink-referenceapplication-registrationapp-registerPatient-homepageLink-extension']")
     private WebElement registerPatientTab;
 
     @FindBy(id = "referenceapplication-vitals-referenceapplication-vitals-extension']")
@@ -41,36 +42,52 @@ public class HomePage extends CommonPage {
     @FindBy(id = "coreapps-systemadministration-homepageLink-coreapps-systemadministration-homepageLink-extension")
     private WebElement sysAdminTab;
 
+    SoftAssert softAssert;
 
-    public HomePage(WebDriver driver) {
+    public HomePage(WebDriver driver, SoftAssert softAssert) {
         super(driver);
+        this.softAssert = softAssert;
         PageFactory.initElements(driver, this);
     }
 
-
-    public void visitHomePage() {
-        driver.get(ConfigReader.getProperty("urlHomePage"));
-
-        Assert.assertEquals(driver.getTitle(), "Home");      // verify the title of the page
+    public void verifyHomePageTitle() {
+        softAssert.assertEquals(driver.getTitle().trim(), "Home");
     }
 
-
-    private void selectTab() {
+    public void selectTab() {
         verifyTabs();
 
         //select location Register A Patient
+        softAssert.assertTrue(registerPatientTab.isDisplayed());
         registerPatientTab.click();
-        Assert.assertTrue(registerPatientTab.isEnabled());
+
 
     }
 
 
     private void verifyTabs() {
-        final List<WebElement> tabs = driver.findElements(By.xpath("//div[@class='col-12 col-sm-12 col-md-12 col-lg-12 homeList']/a"));
-        for (WebElement tab : tabs)
-            Assert.assertTrue(tab.isDisplayed());
+        final List<WebElement> tabs = driver.findElements(By.xpath("//div[@id='apps']/a"));
+
+        String[] tabNames = {"Find Patient Record", "Active Visits", "Register a patient",
+                "Capture Vitals", "Appointment Scheduling",
+                "Reports", "Data Management", "Configure Metadata", "System Administration"};
+
+
+        int i = 0;
+            for (WebElement tab : tabs) {
+                final String tabTxt = tab.getText().trim();
+                softAssert.assertEquals(tabTxt, tabNames[i]);
+                i++;
+
+            }
+
     }
 }
+
+
+
+
+
 
 
 
