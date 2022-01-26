@@ -35,6 +35,7 @@ public class LoginPage {
     @FindBy(xpath = "//label[@for='username']")
     private WebElement usernameLabel;
 
+
     //find element for USER INPUT
     @FindBy(id = "username")
     private WebElement username;
@@ -99,9 +100,9 @@ public class LoginPage {
     public void visitLoginPage() {
         driver.get(ConfigReader.getProperty("url"));      // use the url from the config.properties file
         String actualTitle = driver.getTitle();
-        String expectedTitle ="Login";
-        softAssert.assertEquals(actualTitle,expectedTitle);      // verify the title of the page
-//        driver.quit();
+        String expectedTitle = "Login";
+        softAssert.assertEquals(actualTitle, expectedTitle);      // verify the title of the page
+
     }
 
     public void login() {
@@ -125,9 +126,10 @@ public class LoginPage {
     }
 
     private void selectLocation() {
-//        verifyLocations();
+        //      verifyLocations();
+        verifyAllLabels();
 //
-        //select location Inpatient Ward
+
         impatientWard.click();
         softAssert.assertTrue(impatientWard.isEnabled());
 
@@ -136,19 +138,31 @@ public class LoginPage {
 
     private void verifyLocations() {
         final List<WebElement> locations = driver.findElements(By.xpath("//ul[@id='sessionLocation']/li"));
-        String[] locatoinNames = {"Inpatient Ward", "Outpatient Clinic", "Isolation Ward", "Pharmacy","Laboratory","Registration Desk"};
+        String[] locationNames = {"Inpatient Ward", "Outpatient Clinic", "Isolation Ward", "Pharmacy", "Laboratory", "Registration Desk"};
         int i = 0;
         for (WebElement location : locations) {
-            softAssert.assertEquals(location.getText().trim(), locatoinNames[i]);
+            softAssert.assertEquals(location.getText().trim(), locationNames[i]);
             i++;
         }
-    }
-
-
-//    // Assert.assertEquals(actualTitle,expectedTitle);
-//    private void verifyAllLables(){
 
     }
+
+    private void verifyAllLabels() {
+
+        final String[] labels = {"Username:", "Password:", "Location for this session:", "LOGIN", "Can't log in?"};
+        int i = 0;
+        for (String label : labels) {
+            softAssert.assertEquals(label.trim(), labels[i]);
+            i++;
+        }
+
+    }
+}
+
+
+
+
+
 
 
 

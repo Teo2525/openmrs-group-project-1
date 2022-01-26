@@ -56,6 +56,7 @@ public class HomePage extends CommonPage {
 
     public void selectTab() {
         verifyTabs();
+        verifyGeneralTabs();
 
         //select location Register A Patient
         softAssert.assertTrue(registerPatientTab.isDisplayed());
@@ -72,7 +73,6 @@ public class HomePage extends CommonPage {
                 "Capture Vitals", "Appointment Scheduling",
                 "Reports", "Data Management", "Configure Metadata", "System Administration"};
 
-
         int i = 0;
             for (WebElement tab : tabs) {
                 final String tabTxt = tab.getText().trim();
@@ -80,8 +80,20 @@ public class HomePage extends CommonPage {
                 i++;
 
             }
-
     }
+
+
+
+    private void verifyGeneralTabs() {
+        final List<WebElement> tabs = driver.findElements(By.xpath("//ul[@class='navbar-nav ml-auto user-options']/li"));
+        String [] tabNames = {"admin", "Impatient Ward", "Logout"};
+        int i=0;
+        for (String tab : tabNames) {
+            softAssert.assertEquals(tab.trim(),tabNames[i]);
+            i++;
+        }
+    }
+
 }
 
 
