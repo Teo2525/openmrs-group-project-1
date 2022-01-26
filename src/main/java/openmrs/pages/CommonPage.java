@@ -12,7 +12,7 @@ import java.util.List;
 //use this class in case you need to store common element across all pages
 public class CommonPage {
 
-    WebDriver driver;
+    protected  WebDriver driver;
 
     public CommonPage(WebDriver driver) {
         this.driver = driver;

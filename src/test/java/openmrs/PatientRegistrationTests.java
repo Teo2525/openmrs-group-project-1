@@ -36,10 +36,12 @@ public class PatientRegistrationTests {
 
 //       homePage.verifyHomePageTitle();
         homePage.selectTab();
-        registrationPage.registration();
+        registrationPage.register();
 
 
         softAssert.assertAll();
+
+
     }
 
 
