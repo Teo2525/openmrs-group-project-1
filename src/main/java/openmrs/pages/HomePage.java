@@ -14,7 +14,6 @@ import java.util.List;
 
 public class HomePage extends CommonPage {
 
-
     @FindBy(id = "coreapps-activeVisitsHomepageLink-coreapps-activeVisitsHomepageLink-extension']")
     private WebElement findPatientTab;
 
@@ -61,8 +60,6 @@ public class HomePage extends CommonPage {
         //select location Register A Patient
         softAssert.assertTrue(registerPatientTab.isDisplayed());
         registerPatientTab.click();
-
-
     }
 
 
@@ -74,22 +71,20 @@ public class HomePage extends CommonPage {
                 "Reports", "Data Management", "Configure Metadata", "System Administration"};
 
         int i = 0;
-            for (WebElement tab : tabs) {
-                final String tabTxt = tab.getText().trim();
-                softAssert.assertEquals(tabTxt, tabNames[i]);
-                i++;
+        for (WebElement tab : tabs) {
+            final String tabTxt = tab.getText().trim();
+            softAssert.assertEquals(tabTxt, tabNames[i]);
+            i++;
 
-            }
+        }
     }
-
-
 
     private void verifyGeneralTabs() {
         final List<WebElement> tabs = driver.findElements(By.xpath("//ul[@class='navbar-nav ml-auto user-options']/li"));
-        String [] tabNames = {"admin", "Impatient Ward", "Logout"};
-        int i=0;
+        String[] tabNames = {"admin", "Impatient Ward", "Logout"};
+        int i = 0;
         for (String tab : tabNames) {
-            softAssert.assertEquals(tab.trim(),tabNames[i]);
+            softAssert.assertEquals(tab.trim(), tabNames[i]);
             i++;
         }
     }

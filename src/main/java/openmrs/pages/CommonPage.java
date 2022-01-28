@@ -13,7 +13,6 @@ import java.util.List;
 public class CommonPage {
 
     protected  WebDriver driver;
-
     public CommonPage(WebDriver driver) {
         this.driver = driver;
 

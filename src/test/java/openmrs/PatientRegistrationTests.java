@@ -1,15 +1,14 @@
 package openmrs;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
-import openmrs.pages.CommonPage;
-import openmrs.pages.HomePage;
-import openmrs.pages.LoginPage;
-import openmrs.pages.RegistrationPage;
+import openmrs.pages.*;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
+
+import java.time.Duration;
 
 
 public class PatientRegistrationTests {
@@ -22,24 +21,32 @@ public class PatientRegistrationTests {
         WebDriverManager.chromedriver().setup();
         softAssert = new SoftAssert();
         driver = new ChromeDriver();
-
+        driver.manage().window().maximize();
+        driver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(15));
     }
 
     @Test
-    public void patientRegisterTest() {
+    public void patientRegisterTest() throws InterruptedException {
         LoginPage loginPage = new LoginPage(driver, softAssert);
         HomePage homePage = new HomePage(driver, softAssert);
         RegistrationPage registrationPage = new RegistrationPage(driver, softAssert);
+        PatientDetails patientDetails = new PatientDetails(driver, softAssert);
 
         loginPage.visitLoginPage();
         loginPage.login();
 
-//       homePage.verifyHomePageTitle();
+    //    homePage.verifyHomePageTitle();
         homePage.selectTab();
         registrationPage.register();
 
 
-        softAssert.assertAll();
+        // patientDetails.successMesg();
+        // patientDetails.validatePersonDetails();
+        Thread.sleep(2000);
+
+        patientDetails.sendMessage();
+
+
 
 
     }

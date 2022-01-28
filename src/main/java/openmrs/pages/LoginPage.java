@@ -20,7 +20,6 @@ public class LoginPage {
     private WebDriver driver;
     private SoftAssert softAssert;
 
-
     // create Constructor for WedDriver Object
     public LoginPage(WebDriver driver, SoftAssert softAssert) {
         this.driver = driver;
@@ -29,12 +28,10 @@ public class LoginPage {
 
     }
 
-
     //========================= Find all elements on Login Page ============================
     //find element for USER LABEL
     @FindBy(xpath = "//label[@for='username']")
     private WebElement usernameLabel;
-
 
     //find element for USER INPUT
     @FindBy(id = "username")
@@ -55,7 +52,6 @@ public class LoginPage {
     //find element for LOGIN BUTTON
     @FindBy(id = "loginButton")
     private WebElement loginButton;
-
 
     // find element for CAN'T LOGIN
     @FindBy(id = "cantLogin")
@@ -93,7 +89,6 @@ public class LoginPage {
     @FindBy(id = "Registration Desk")
     private WebElement registrationDesk;
 
-
     //========================= Methods ============================
 
     // 1. get to the HomePage
@@ -102,7 +97,6 @@ public class LoginPage {
         String actualTitle = driver.getTitle();
         String expectedTitle = "Login";
         softAssert.assertEquals(actualTitle, expectedTitle);      // verify the title of the page
-
     }
 
     public void login() {
@@ -118,21 +112,15 @@ public class LoginPage {
         //select location
         selectLocation();
 
-
         //click sign again
         loginButton.click();
-
-
     }
 
     private void selectLocation() {
         //      verifyLocations();
         verifyAllLabels();
-//
-
         impatientWard.click();
         softAssert.assertTrue(impatientWard.isEnabled());
-
     }
 
 
@@ -144,7 +132,6 @@ public class LoginPage {
             softAssert.assertEquals(location.getText().trim(), locationNames[i]);
             i++;
         }
-
     }
 
     private void verifyAllLabels() {
@@ -155,7 +142,6 @@ public class LoginPage {
             softAssert.assertEquals(label.trim(), labels[i]);
             i++;
         }
-
     }
 }
 
