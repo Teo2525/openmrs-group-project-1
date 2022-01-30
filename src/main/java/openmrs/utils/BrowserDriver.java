@@ -1,5 +1,4 @@
 package openmrs.utils;
-
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -19,13 +18,13 @@ public class BrowserDriver {
     private static WebDriver driver;
 
     //no one should create an instance of Driver
-    private BrowserDriver(){};
+//    private BrowserDriver(){};
 
     //using Singleton Design Pattern
     public static WebDriver getDriver() throws Exception {
-                            //"chrome"
+        //"chrome"
         String browser = ConfigReader.getProperty("browser").toLowerCase();
-        int implWaitTime = Integer.parseInt( ConfigReader.getProperty("implicitWait") );
+//        int implWaitTime = Integer.parseInt( ConfigReader.getProperty("implicitWait") );
         //     chrome
         switch (browser){
             case "chrome":
@@ -48,7 +47,7 @@ public class BrowserDriver {
                 break;
         }
         if (driver != null){
-            driver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(implWaitTime));
+            driver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(10));
             driver.manage().deleteAllCookies();
             return driver;
         }
