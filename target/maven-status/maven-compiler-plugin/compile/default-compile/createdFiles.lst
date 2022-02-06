@@ -1,0 +1,7 @@
+openmrs\pages\HomePage.class
+openmrs\pages\RegistrationPage.class
+openmrs\utils\BrowserDriver.class
+openmrs\pages\PatientDetails.class
+openmrs\pages\CommonPage.class
+openmrs\utils\ConfigReader.class
+openmrs\pages\LoginPage.class
