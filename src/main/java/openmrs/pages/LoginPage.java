@@ -1,6 +1,5 @@
 package openmrs.pages;
 
-
 import openmrs.utils.ConfigReader;
 import org.checkerframework.checker.units.qual.A;
 import org.openqa.selenium.By;
@@ -145,3 +144,17 @@ public class LoginPage {
         }
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
