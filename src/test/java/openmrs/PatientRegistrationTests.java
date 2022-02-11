@@ -2,14 +2,13 @@ package openmrs;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
 import openmrs.pages.*;
-import openmrs.utils.BrowserDriver;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
-import java.io.IOException;
+import java.time.Duration;
 
 
 public class PatientRegistrationTests {
@@ -18,38 +17,35 @@ public class PatientRegistrationTests {
     SoftAssert softAssert;
 
     @BeforeMethod
-    public void setup( ) throws Exception {
-        driver = BrowserDriver.getDriver();
+    public void setup() {
+        WebDriverManager.chromedriver().setup();
         softAssert = new SoftAssert();
-
-//        driver = new ChromeDriver();
-
+        driver = new ChromeDriver();
+        driver.manage().window().maximize();
+        driver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(15));
     }
 
     @Test
-    public void patientRegisterTest() throws IOException, InterruptedException {
+    public void patientRegisterTest() throws InterruptedException {
         LoginPage loginPage = new LoginPage(driver, softAssert);
         HomePage homePage = new HomePage(driver, softAssert);
         RegistrationPage registrationPage = new RegistrationPage(driver, softAssert);
-        GeneralAction generalAction = new GeneralAction(driver,softAssert);
-
+        PatientDetails patientDetails = new PatientDetails(driver, softAssert);
 
         loginPage.visitLoginPage();
         loginPage.login();
 
-//       homePage.verifyHomePageTitle();
+        homePage.verifyHomePageTitle();
         homePage.selectTab();
         registrationPage.register();
-        generalAction.verifyGeneralAction();
 
 
-
-
-
-//        softAssert.assertAll();
-
-
-
+//         patientDetails.successMesg();
+         patientDetails.validatePersonDetails();
+//        Thread.sleep(2000);
+//
+//        patientDetails.sendMessage();
+//
 
 
 

@@ -1,7 +1,6 @@
 package openmrs.pages;
 
 import com.github.javafaker.Faker;
-import openmrs.utils.ConfigReader;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -11,19 +10,19 @@ import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 import org.testng.asserts.SoftAssert;
 
-import java.io.IOException;
 import java.util.List;
+
+
 import static org.testng.Assert.*;
 
 
-public class RegistrationPage {
-    private WebDriver driver;
+public class RegistrationPage extends CommonPage {
+
     private SoftAssert softAssert;
     private Faker faker;
-    //public static String PatientId;
 
     public RegistrationPage(WebDriver driver, SoftAssert softAssert) {
-    this.driver=driver;
+        super(driver);
         this.faker = new Faker();
         this.softAssert = softAssert;
         PageFactory.initElements(driver, this);
@@ -83,15 +82,8 @@ public class RegistrationPage {
     @FindBy(xpath = "//input[@id='submit']")
     private WebElement confirmBtn;
 
-    @FindBy (xpath = "//*[@id='content']/div[6]/div[2]/div/span")
-    private WebElement patientId;
-    //*[@id="coreapps-diagnosesList"]/div[1]/h3
 
-
-
-
-
-    public void register() throws IOException {
+    public void register() {
         enterNames();
         clickNext();
 
@@ -111,7 +103,7 @@ public class RegistrationPage {
         clickNext();
 //        verifyCheckButton();
 
-       clickConfirm();
+        clickConfirm();
 
     }
 
@@ -198,14 +190,14 @@ public class RegistrationPage {
         }
     }
 
-    private void clickConfirm() throws IOException {
+    private void clickConfirm() {
         confirmBtn.click();
-        String patientText= patientId.getText();
-        ConfigReader.setProperty("Id",patientText);
-
-
     }
 
 }
+
+
+
+
 
 

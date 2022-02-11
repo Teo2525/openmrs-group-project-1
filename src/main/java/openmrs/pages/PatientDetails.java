@@ -1,7 +1,6 @@
 package openmrs.pages;
 
-import openmrs.utils.ConfigReader;
-import org.openqa.selenium.By;
+import com.github.javafaker.Faker;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -9,137 +8,53 @@ import org.openqa.selenium.support.PageFactory;
 import org.testng.Assert;
 import org.testng.asserts.SoftAssert;
 
-import java.util.List;
+public class PatientDetails extends CommonPage {
 
-public class PatientDetails {
-    private WebDriver driver;
     private SoftAssert softAssert;
+    private Faker faker;
 
 
-    // create Constructor for WedDriver Object
     public PatientDetails(WebDriver driver, SoftAssert softAssert) {
-        this.driver = driver;
+        super(driver);
+        this.faker = new Faker();
         this.softAssert = softAssert;
         PageFactory.initElements(driver, this);
-
     }
 
-    //========================= Find all elements on Login Page ============================
-    //find element for USER LABEL
-    @FindBy(xpath = "//label[@for='username']")
-    private WebElement usernameLabel;
+    @FindBy(xpath = "//script[contains(text(),'successMessage')]/text()")
+    private WebElement successRegistration;
 
-    //find element for USER INPUT
-    @FindBy(id = "username")
-    private WebElement username;
+    @FindBy(xpath = "//*[@id=\"content\"]/div[6]/div[1]/div/div[1]/h1/span[1]/span")
+    private WebElement givenNameBox;
 
-    //find element for PASSWORD LABEL
-    @FindBy(xpath = "//label[@for='password']")
-    private WebElement passwordLabel;
+    @FindBy(xpath = "//*[@id=\"content\"]/div[6]/div[1]/div/div[1]/h1/span[3]/span")
+    private WebElement familyNameBox;
 
-    //find element for PASSWORD INPUT
-    @FindBy(id = "password")
-    private WebElement password;
+    @FindBy(xpath = "//div[@class='gender-age col-auto']")
+    private WebElement genderAgeBirthDate;
 
-    //find element for LOCATION LABEL
-    @FindBy(xpath = "//label[@for='sessionLocation']")
-    private WebElement locationLabel;
-
-    //find element for LOGIN BUTTON
-    @FindBy(id = "loginButton")
-    private WebElement loginButton;
-
-    // find element for CAN'T LOGIN
-    @FindBy(id = "cantLogin")
-    private WebElement cantLoginLabel;
-
-    //find element for LOGIN LABEL
-    @FindBy(xpath = "//legend[@class='w-auto']")
-    private WebElement loginLabel;
-
-    // find element errorWarning
-    @FindBy(id = "sessionLocationError")
-    private WebElement errorWarning;
-
-    // find element for IMPATIENT WARD
-    @FindBy(id = "Inpatient Ward")
-    private WebElement impatientWard;
-
-    // find element for OUTPATIENT CLINIC
-    @FindBy(id = "Outpatient Clinic")
-    private WebElement outpatientClinic;
-
-    // find element for ISOLATION WARD
-    @FindBy(id = "Isolation Ward")
-    private WebElement isolationWard;
-
-    // find element for PHARMACY
-    @FindBy(id = "Pharmacy")
-    private WebElement pharmacy;
-
-    // find element for LABORATORY
-    @FindBy(id = "Laboratory")
-    private WebElement laboratory;
-
-    // find element for REGISTRATION DESK
-    @FindBy(id = "Registration Desk")
-    private WebElement registrationDesk;
+    @FindBy(xpath = "//i[@class='icon-sticky-note']")
+    private WebElement notesIcon;
+    @FindBy(xpath = "//textarea[@placeholder='Enter a note']")
+    private WebElement sendMessage;
 
 
-    //========================= Methods ============================
-
-    // 1. get to the HomePage
-    public void visitLoginPage() {
-        driver.get(ConfigReader.getProperty("url"));      // use the url from the config.properties file
-        String actualTitle = driver.getTitle();
-        String expectedTitle = "Login";
-        softAssert.assertEquals(actualTitle, expectedTitle);      // verify the title of the page
+    public void successMesg() {
+        String actualText = successRegistration.getText().trim();
+        Assert.assertTrue(actualText.contains("Created Patient Record"));
     }
 
-    public void login() {
-        username.sendKeys(ConfigReader.getProperty("username"));  // enter username from config.properties
-        password.sendKeys(ConfigReader.getProperty("password"));  // enter password from config.properties
-
-        //click sing in
-        loginButton.click();
-
-        //verify error
-        Assert.assertTrue(errorWarning.isDisplayed());
-
-        //select location
-        selectLocation();
-
-        //click sign again
-        loginButton.click();
+    public void validatePersonDetails() {
+        Assert.assertTrue(givenNameBox.isDisplayed());
+        Assert.assertTrue(familyNameBox.isDisplayed());
+//        Assert.assertTrue(genderAgeBirthDate.isDisplayed());
     }
 
-    private void selectLocation() {
-        //      verifyLocations();
-        verifyAllLabels();
-        impatientWard.click();
-        softAssert.assertTrue(impatientWard.isEnabled());
+    public void sendMessage() {
+        notesIcon.click();
+        sendMessage.sendKeys("Hi everyone");
     }
 
 
-    private void verifyLocations() {
-        final List<WebElement> locations = driver.findElements(By.xpath("//ul[@id='sessionLocation']/li"));
-        String[] locationNames = {"Inpatient Ward", "Outpatient Clinic", "Isolation Ward", "Pharmacy", "Laboratory", "Registration Desk"};
-        int i = 0;
-        for (WebElement location : locations) {
-            softAssert.assertEquals(location.getText().trim(), locationNames[i]);
-            i++;
-        }
-    }
-
-    private void verifyAllLabels() {
-
-        final String[] labels = {"Username:", "Password:", "Location for this session:", "LOGIN", "Can't log in?"};
-        int i = 0;
-        for (String label : labels) {
-            softAssert.assertEquals(label.trim(), labels[i]);
-            i++;
-        }
-    }
 }
-
 
