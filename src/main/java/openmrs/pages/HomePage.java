@@ -12,9 +12,6 @@ import org.testng.asserts.SoftAssert;
 import java.util.List;
 
 
-
-
-
     public class HomePage  {
         WebDriver driver;
         SoftAssert softAssert;
