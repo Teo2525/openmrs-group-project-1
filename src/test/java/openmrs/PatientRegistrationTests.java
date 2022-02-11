@@ -35,17 +35,17 @@ public class PatientRegistrationTests {
         loginPage.visitLoginPage();
         loginPage.login();
 
-    //    homePage.verifyHomePageTitle();
+        homePage.verifyHomePageTitle();
         homePage.selectTab();
         registrationPage.register();
 
 
-        // patientDetails.successMesg();
-        // patientDetails.validatePersonDetails();
-        Thread.sleep(2000);
-
-        patientDetails.sendMessage();
-
+//         patientDetails.successMesg();
+         patientDetails.validatePersonDetails();
+//        Thread.sleep(2000);
+//
+//        patientDetails.sendMessage();
+//
 
 
 
